@@ -24,10 +24,7 @@ int readChar(void) {
 int openInputStream(char* fileName) {
     inputStream = fopen(fileName, "rt");
     if (inputStream == NULL) {
-        printf("File not found!\n");
         return IO_ERROR;
-    } else {
-        printf("File opened successfully!\n");
     }
 
     lineNo = 1;

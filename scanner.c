@@ -31,7 +31,7 @@ void skipComment() {
         case CHAR_TIMES:
             state = 1;
             break;
-        case CHAR_RPAR:
+        case CHAR_SLASH:
             if (state == 1)
                 state = 2;
             else
@@ -146,9 +146,22 @@ Token *getToken(void) {
         readChar();
         return token;
     case CHAR_SLASH:
-        token = makeToken(SB_SLASH, lineNo, colNo);
+        ln = lineNo;
+        cn = colNo;
         readChar();
-        return token;
+
+        if (currentChar == EOF) {
+            return makeToken(SB_SLASH, ln, cn);
+        }
+        
+        switch (charCodes[currentChar]) {
+            case CHAR_TIMES:
+                readChar();
+                skipComment();
+                return getToken();
+            default:
+                return makeToken(SB_SLASH, ln, cn);
+        }
     case CHAR_LT:
         ln = lineNo;
         cn = colNo;
@@ -220,15 +233,11 @@ Token *getToken(void) {
             return makeToken(SB_LPAR, ln, cn);
 
         switch (charCodes[currentChar]) {
-        case CHAR_PERIOD:
-            readChar();
-            return makeToken(SB_LSEL, ln, cn);
-        case CHAR_TIMES:
-            readChar();
-            skipComment();
-            return getToken();
-        default:
-            return makeToken(SB_LPAR, ln, cn);
+            case CHAR_PERIOD:
+                readChar();
+                return makeToken(SB_LSEL, ln, cn);
+            default:
+                return makeToken(SB_LPAR, ln, cn);
         }
     case CHAR_RPAR:
         token = makeToken(SB_RPAR, lineNo, colNo);
@@ -406,7 +415,7 @@ int scan(char *fileName) {
 
 /******************************************************************/
 
-/*int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     if (argc <= 1) {
         printf("scanner: no input file.\n");
         return -1;
@@ -419,8 +428,8 @@ int scan(char *fileName) {
 
     return 0;
 }
-*/
-int main() {
+
+/* int main() {
     char* file1 = "test/example1.kpl";
     char* file2 = "test/example2.kpl";
     char* file3 = "test/example3.kpl";
@@ -429,17 +438,18 @@ int main() {
     if (scan(file1) == IO_ERROR) {
         printf("Can\'t read \"%s\"!\n", file1);
     }
-    // printf("\n\n");
+    printf("\n\n");
 
-    // printf("%s\n", file2);
-    // if (scan(file2) == IO_ERROR) {
-    //     printf("Can\'t read \"%s\"!\n", file2);
-    // }
-    // printf("\n\n");
+    printf("%s\n", file2);
+    if (scan(file2) == IO_ERROR) {
+        printf("Can\'t read \"%s\"!\n", file2);
+    }
+    printf("\n\n");
 
-    // printf("%s\n", file3);
-    // if (scan(file3) == IO_ERROR) {
-    //     printf("Can\'t read \"%s\"!\n", file3);
-    // }
+    printf("%s\n", file3);
+    if (scan(file3) == IO_ERROR) {
+        printf("Can\'t read \"%s\"!\n", file3);
+    }
     return 1;
 }
+*/
