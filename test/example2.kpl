@@ -1,4 +1,4 @@
-Program Example2; (* Factorial *)
+Program Example2; /* Factorial */
    
 Var n : Integer;
 
@@ -13,4 +13,4 @@ Begin
       Call WriteLn;
       Call WriteI( F(i));
     End;
-End. (* Factorial *)
+End. /* Factorial */
