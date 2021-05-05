@@ -46,6 +46,12 @@ void skipComment() {
         error(ERR_ENDOFCOMMENT, lineNo, colNo);
 }
 
+void skipToEndOfLine() {
+    while (currentChar != '\n') {
+        readChar();
+    }
+}
+
 Token *readIdentKeyword(void) {
     Token *token = makeToken(TK_NONE, lineNo, colNo);
     int count = 1;
@@ -158,6 +164,9 @@ Token *getToken(void) {
             case CHAR_TIMES:
                 readChar();
                 skipComment();
+                return getToken();
+            case CHAR_SLASH:
+                skipToEndOfLine();
                 return getToken();
             default:
                 return makeToken(SB_SLASH, ln, cn);
@@ -415,7 +424,7 @@ int scan(char *fileName) {
 
 /******************************************************************/
 
-int main(int argc, char *argv[]) {
+/* int main(int argc, char *argv[]) {
     if (argc <= 1) {
         printf("scanner: no input file.\n");
         return -1;
@@ -428,17 +437,18 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+*/
 
-/* int main() {
+int main() {
     char* file1 = "test/example1.kpl";
     char* file2 = "test/example2.kpl";
     char* file3 = "test/example3.kpl";
 
-    printf("%s\n", file1);
-    if (scan(file1) == IO_ERROR) {
-        printf("Can\'t read \"%s\"!\n", file1);
-    }
-    printf("\n\n");
+    /* printf("%s\n", file1); */
+    /* if (scan(file1) == IO_ERROR) { */
+    /*     printf("Can\'t read \"%s\"!\n", file1); */
+    /* } */
+    /* printf("\n\n"); */
 
     printf("%s\n", file2);
     if (scan(file2) == IO_ERROR) {
@@ -446,10 +456,9 @@ int main(int argc, char *argv[]) {
     }
     printf("\n\n");
 
-    printf("%s\n", file3);
-    if (scan(file3) == IO_ERROR) {
-        printf("Can\'t read \"%s\"!\n", file3);
-    }
+    /* printf("%s\n", file3); */
+    /* if (scan(file3) == IO_ERROR) { */
+    /*     printf("Can\'t read \"%s\"!\n", file3); */
+    /* } */
     return 1;
 }
-*/

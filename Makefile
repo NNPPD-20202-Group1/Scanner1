@@ -2,8 +2,6 @@ CFLAGS = -c -Wall
 CC = gcc
 LIBS =  -lm 
 
-all: scanner
-
 scanner: scanner.o reader.o charcode.o token.o error.o
 	${CC} scanner.o reader.o charcode.o token.o error.o -o scanner
 
@@ -25,3 +23,7 @@ error.o: error.c
 clean:
 	rm -f *.o *~
 
+build: scanner
+
+run: build
+	./scanner
