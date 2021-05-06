@@ -8,8 +8,10 @@
 #include <stdlib.h>
 #include "error.h"
 
-void error(ErrorCode err, int lineNo, int colNo) {
-    switch (err) {
+void error(ErrorCode err, int lineNo, int colNo)
+{
+    switch (err)
+    {
     case ERR_ENDOFCOMMENT:
         printf("%d-%d:%s\n", lineNo, colNo, ERM_ENDOFCOMMENT);
         break;
@@ -22,7 +24,9 @@ void error(ErrorCode err, int lineNo, int colNo) {
     case ERR_INVALIDSYMBOL:
         printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDSYMBOL);
         break;
+    case ERR_INVALIDNUMBER:
+        printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDNUMBER);
+        break;
     }
     exit(-1);
 }
-

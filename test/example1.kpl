@@ -1,3 +1,5 @@
 Program Example1; /* Example 1 */
+Var n : real;
+n := 10.99999001231321239;
 Begin //asdf asdfasd fasdf
 End. /* Example 1 */

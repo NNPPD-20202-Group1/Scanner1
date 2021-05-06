@@ -17,6 +17,7 @@ struct {
     {"TYPE", KW_TYPE},
     {"VAR", KW_VAR},
     {"INTEGER", KW_INTEGER},
+    {"REAL", KW_REAL},
     {"CHAR", KW_CHAR},
     {"ARRAY", KW_ARRAY},
     {"OF", KW_OF},

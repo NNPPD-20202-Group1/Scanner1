@@ -13,7 +13,7 @@
 typedef enum {
     TK_NONE, TK_IDENT, TK_NUMBER, TK_CHAR, TK_EOF,
 
-    KW_PROGRAM, KW_CONST, KW_TYPE, KW_VAR,
+    KW_PROGRAM, KW_CONST, KW_TYPE, KW_VAR, KW_REAL,
     KW_INTEGER, KW_CHAR, KW_ARRAY, KW_OF, 
     KW_FUNCTION, KW_PROCEDURE,
     KW_BEGIN, KW_END, KW_CALL,
@@ -26,11 +26,18 @@ typedef enum {
     SB_LPAR, SB_RPAR, SB_LSEL, SB_RSEL
 } TokenType; 
 
+union RealType
+{
+    int r_real;
+    int r_imag;
+};
+
 typedef struct {
     char string[MAX_IDENT_LEN + 1];
     int lineNo, colNo;
     TokenType tokenType;
-    int value;
+    // int value;
+    union RealType value;
 } Token;
 
 TokenType checkKeyword(char *string);
